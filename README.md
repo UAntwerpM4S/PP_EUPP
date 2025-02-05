@@ -3,8 +3,38 @@ This is the code corresponding to the paper https://arxiv.org/abs/2412.13957. Th
 as a competitive benchmark, we used the classical MBM method of Van Schaeybroeck & Vannitsem (2015). 
 
 ### Structure
+The scripts here work with relative directories. 
+PP_EUPP/
+├── ClassicalMBM
+│   └── trainMBM.py  #Script to train the classical MBM methods 
+├── data #training data should be downloaded here 
+│   └── Download_EUPPBench.py  #Script to download the EUPPBench data. 
+├── LICENSE
+├── Loader.py #data loader script, extracts data and prepares it for training
+├── __pycache__
+│   ├── Loader.cpython-310.pyc
+│   └── Transformer.cpython-310.pyc
+├── README.md
+├── Train.py #script that executed the training. 
+├── TrainValTestSplit #scripts used to split the data into training, validation and testing sets. 
+│   ├── splitdates.py
+│   ├── test_era5_files.pkl
+│   ├── test_eupp_files.pkl
+│   ├── train_era5_files.pkl
+│   ├── train_eupp_files.pkl
+│   ├── val_era5_files.pkl
+│   └── val_eupp_files.pkl
+├── Transformer.py #The actual transformer. For more details on this architecture, check the paper. 
+└── utils
+    ├── __init__.py
+    ├── metrics.py #CPRS and truncated CRPS are defiend here. 
+    ├── parser.py
+    └── __pycache__
+        ├── __init__.cpython-310.pyc
+        ├── metrics.cpython-310.pyc
+        └── parser.cpython-310.pyc
 
-
+You can specify most parameters in the command line, e.g. an example training command would be; 
 
 
 #### References
