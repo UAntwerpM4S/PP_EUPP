@@ -4,8 +4,6 @@ from Loader import *
 import matplotlib.pyplot as plt
 import time
 import torch
-from xskillscore import crps_ensemble, crps_gaussian
-import properscoring as ps
 from torch import nn as nn
 from tqdm import tqdm
 from datetime import datetime

@@ -1,0 +1,11 @@
+cfgrib==0.9.15.0
+climetlab==0.24.0
+einops==0.8.0
+hanging_threads==2.0.7
+matplotlib==3.10.0
+numpy==2.2.2
+pandas==2.2.3
+scipy==1.15.1
+torch==2.6.0
+tqdm==4.65.0
+xarray==2025.1.2
