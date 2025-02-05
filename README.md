@@ -2,6 +2,9 @@
 This is the code corresponding to the paper https://arxiv.org/abs/2412.13957. The transformer described here is based on the original transformer by Finn (2021) and some parts of the code by Ashkboos et al (2022).  The transformer presented here is designed for the fast and accurate postprocessing of ensemble weather forecasts, while allowing for a flexible inclusion of predictors and lead times. The self-attention mechanism allows for information exchange across predictor, spatial, temporal and ensemble dimension. The transformer is trained on the EUPPBenchmark dataset of Demaeyer et al. (2023) and
 as a competitive benchmark, we used the classical MBM method of Van Schaeybroeck & Vannitsem (2015). 
 
+If you use this repository please cite:
+Van Poecke, A., Finn, T. S., Meng, R., Bergh, J. V. D., Smet, G., Demaeyer, J., ... & Hellinckx, P. (2024). Self-attentive Transformer for Fast and Accurate Postprocessing of Temperature and Wind Speed Forecasts. arXiv preprint arXiv:2412.13957.
+
 ### Structure
 The scripts here work with relative directories. 
 ```
