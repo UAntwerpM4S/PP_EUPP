@@ -22,7 +22,7 @@ PP_EUPP/
 ├── README.md
 ├── results
 │   ├── CRPS_grid_example.png
-│   └── Transformerweights
+│   └── Transformerweights #store the weights of your trained transformer here 
 ├── Train.py script that executed the training. 
 ├── TrainValTestSplit #scripts used to split the data into training, validation and testing sets. 
 │   ├── splitdates.py
