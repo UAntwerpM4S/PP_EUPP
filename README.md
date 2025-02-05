@@ -36,7 +36,7 @@ PP_EUPP/
         └── parser.cpython-310.pyc
 ```
 
-You can specify most parameters in the command line, e.g. an example training command would be; 
+You can specify most parameters in the command line, e.g. an example training command would be; test
 
 
 #### References
