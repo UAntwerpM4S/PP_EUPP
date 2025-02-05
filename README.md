@@ -4,6 +4,7 @@ as a competitive benchmark, we used the classical MBM method of Van Schaeybroeck
 
 ### Structure
 The scripts here work with relative directories. 
+```
 PP_EUPP/
 ├── ClassicalMBM
 │   └── trainMBM.py  #Script to train the classical MBM methods 
@@ -33,6 +34,7 @@ PP_EUPP/
         ├── __init__.cpython-310.pyc
         ├── metrics.cpython-310.pyc
         └── parser.cpython-310.pyc
+```
 
 You can specify most parameters in the command line, e.g. an example training command would be; 
 
