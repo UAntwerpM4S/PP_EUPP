@@ -14,16 +14,16 @@ The scripts here work with relative directories.
 ```
 PP_EUPP/
 ├── ClassicalMBM
-│   └── trainMBM.py  #Script to train the classical MBM methods 
+│   └── trainMBM.py #Script to train the classical MBM methods 
 ├── data #training data should be downloaded here 
-│   └── Download_EUPPBench.py  #Script to download the EUPPBench data. 
+│   └── Download_EUPPBench.py #Script to download the EUPPBench data. 
 ├── LICENSE
 ├── Loader.py #data loader script, extracts data and prepares it for training
-├── __pycache__
-│   ├── Loader.cpython-310.pyc
-│   └── Transformer.cpython-310.pyc
 ├── README.md
-├── Train.py #script that executed the training. 
+├── results
+│   ├── CRPS_grid_example.png
+│   └── Transformerweights
+├── Train.py script that executed the training. 
 ├── TrainValTestSplit #scripts used to split the data into training, validation and testing sets. 
 │   ├── splitdates.py
 │   ├── test_era5_files.pkl
@@ -36,11 +36,7 @@ PP_EUPP/
 └── utils
     ├── __init__.py
     ├── metrics.py #CPRS and truncated CRPS are defiend here. 
-    ├── parser.py
-    └── __pycache__
-        ├── __init__.cpython-310.pyc
-        ├── metrics.cpython-310.pyc
-        └── parser.cpython-310.pyc
+    └── parser.py
 ```
 
 You can specify most parameters in the command line, e.g. an example training command would be; 
