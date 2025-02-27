@@ -15,14 +15,17 @@ class EUPPFullEnsembleDataset(Dataset):
         self.normalized = normalized
         self.return_time = return_time
         self.data_path = data_path
-        if target_var in ["t2m","w10","w100"]:
-            self.variables=['w100','t2m','w10','u10','tcc','u100','z','u','w700','t','p10fg6']#,'oro']
-            #tcc','mx2t6','mn2t6', 'sd','slhf6']
-            self.target_var = target_var
-            self.value_range = {"t2m":(235, 304), "z": (48200, 58000), "t":(240, 299), "u10": (-13., 11.), "tcc": (0., 1.0), "w100":(0,50),"w10":(0,30), "u100": (-35,45), "u": (-45,60), "w700": (0,60), "p10fg6": (0,60), "oro":(-400,2800)}
+        if target_var == "t2m":
+            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'sd', 'mx2t6', 'mn2t6', 'w10', 'p10fg6', 'oro'] #12
+        elif target_var == "w10":
+            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'sd', 'mx2t6', 'mn2t6', 'w10', 'u100', 'w100', 'p10fg6', 'v100', 'oro'] #15
+        elif target_var == "w100":
+            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'w10', 'u100', 'w100', 'u', 'w700', 'p10fg6', 'v100', 'v', 'oro'] #15
+        else:
+            self.variables = []  
+        self.target_var = target_var
+        self.value_range = {"t2m":(235, 304), "z": (48200, 58000), "t":(240, 299), "u10": (-13., 11.),"v10": (-30,35), "tcc": (0., 1.0),"sd":(0,8),"mx2t6":(230,320),"mn2t6":(225,315),"v":(-50,55), "w100":(0,50),"w10":(0,30), "u100": (-35,45), "u": (-45,60),"v100":(-40,45), "w700": (0,60), "p10fg6": (0,60), "oro":(-400,2800)}
 
-        
-        
         self.train_eupp_files = []
         self.train_era5_files = []
         self.val_eupp_files = []
