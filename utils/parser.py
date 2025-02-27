@@ -48,6 +48,8 @@ def args_parser():
     
     parser.add_argument('--nheads', type=int, default=8,
                         help='Number of heads (default: 5)')
+        parser.add_argument('--num_predictors', type=int, default=12,
+                        help='Number of predictors (default: 12)')
 
     args = parser.parse_args()
     return args
