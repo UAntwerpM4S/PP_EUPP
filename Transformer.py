@@ -12,7 +12,6 @@ class EnsAttention(torch.nn.Module):
         self.n_heads = n_heads
         n_channels = n_data_shape[-1]
         
-        # Ensure that n_channels is divisible by n_heads
         assert n_channels % n_heads == 0, "n_channels must be divisible by n_heads"
         self.attention_channels = n_channels // n_heads
 
@@ -27,6 +26,7 @@ class EnsAttention(torch.nn.Module):
 
         self.out_layer = torch.nn.Linear(n_channels, n_channels)
         torch.nn.init.normal_(self.out_layer.weight, std=1E-5)
+        
         
     def forward(self, in_tensor: torch.Tensor) -> torch.Tensor:
         b, e, t, h, w, c = in_tensor.shape
@@ -86,34 +86,31 @@ class StackedTransformer(torch.nn.Module):
     def __init__(self, num_blocks: int, n_data_shape: Tuple[int, int, int, int], n_heads: int, mlp_mult: int, projection_channels: int):
         super().__init__()
         
-        self.projection_layer = torch.nn.Linear(n_data_shape[-1], projection_channels)  # Project 10 -> `projection_channels`
+        self.projection_layer = torch.nn.Linear(n_data_shape[-1], projection_channels)
         projected_data_shape = list(n_data_shape[:-1]) + [projection_channels]
-        
-        # Add multiple projection layers with GELU activation
+
         
         self.blocks = torch.nn.ModuleList([
             TransformerBlock(n_data_shape=tuple(projected_data_shape), n_heads=n_heads, mlp_mult=mlp_mult)
             for _ in range(num_blocks)
         ])
         
-        # Final layer to project back to 1 channel
         self.output_layer = torch.nn.Linear(projection_channels, 1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.projection_layer(x)  
         for block in self.blocks:
             x = block(x)
-        x = self.output_layer(x)  
+        x = self.output_layer(x)
         return x
-
-
 
 def scaled_dot_product_attention_custom(query, key, value, scale):
     # #Calculate the dot products between query and key, and scale them
+    #sizes of key and query are  torch.Size([1, 8, 11, 168960])
     # query_numpy = query.detach().cpu().numpy()
     # key_numpy = key.detach().cpu().numpy()
-    # np.save(os.path.join("./results", "query.npy"), query_numpy)
-    # np.save(os.path.join("./results", "key.npy"), key_numpy)
+    # np.save(os.path.join("./results", "query_w100.npy"), query_numpy)
+    # np.save(os.path.join("./results", "key_w100.npy"), key_numpy)
     # Calculate the dot products between query and key, and scale them
     scores = torch.einsum("...qd,...kd->...qk", query, key) / scale
     # Apply softmax to get the attention weights
@@ -123,9 +120,10 @@ def scaled_dot_product_attention_custom(query, key, value, scale):
     return output
 
 def Tformer_prepare(args):
+    num_predictors=1 #12 for temp, 15 for w10 and w100
     return StackedTransformer(
         num_blocks=args.num_blocks,  
-        n_data_shape=(20, 32, 33, 11),  
+        n_data_shape=(20, 32, 33, args.num_predictors),  
         n_heads=args.nheads,  
         mlp_mult=args.mlp_mult,
         projection_channels=args.projection_channels

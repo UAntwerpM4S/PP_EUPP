@@ -18,9 +18,9 @@ class EUPPFullEnsembleDataset(Dataset):
         if target_var == "t2m":
             self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'sd', 'mx2t6', 'mn2t6', 'w10', 'p10fg6', 'oro'] #12
         elif target_var == "w10":
-            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'sd', 'mx2t6', 'mn2t6', 'w10', 'u100', 'w100', 'p10fg6', 'v100', 'oro'] #15
+            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'w10', 'p10fg6','oro']# 'sd', 'mx2t6', 'mn2t6' ,'u100', 'w100','v100'] #9
         elif target_var == "w100":
-            self.variables = ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'w10', 'u100', 'w100', 'u', 'w700', 'p10fg6', 'v100', 'v', 'oro'] #15
+            self.variables =  ['t2m', 'z', 't', 'u10', 'v10', 'tcc', 'w10', 'u100', 'w100', 'u', 'w700', 'p10fg6', 'v100', 'v', 'oro'] #15
         else:
             self.variables = []  
         self.target_var = target_var
@@ -61,9 +61,9 @@ class EUPPFullEnsembleDataset(Dataset):
         if isinstance(idx, int):
             ds_eupp = xr.open_dataset(self.eupp_files[idx]).drop_vars("time", errors="ignore")
             ds_eupp = ds_eupp.fillna(9999.0)
-            ds_era5 = xr.open_dataset(self.era5_files[idx]).fillna(9999.0).isel(step=slice(1, None))  # Exclude the first step, its absent in the reforecast files 
+            ds_era5 = xr.open_dataset(self.era5_files[idx]).fillna(9999.0) # Exclude the first step, its absent in the reforecast files 
             ds_era5 = ds_era5.rename({'w100_obs': 'w100'})
-            orography_data = xr.open_dataset("/home/jupyter-aaron/Postprocessing/TfMBM_wind/baselines/data/oro.nc") 
+            orography_data = xr.open_dataset("/home/jupyter-aaron/Postprocessing/PP_EUPP/data/oro.nc") 
             #orography_data=orography_data.sel(latitude=slice(min_lat, max_lat), longitude=slice(min_lon, max_lon))
             ensemble=ds_eupp["number"].values
             step=ds_eupp["step"].values
@@ -98,10 +98,9 @@ class EUPPFullEnsembleDataset(Dataset):
                     values_tar = torch.reshape(torch.as_tensor(ds_eupp[variable].to_numpy()[:self.num_ensemble,:]), (1,self.num_ensemble,len_TD,len_lat*len_lon))
                     targets = torch.reshape(torch.as_tensor(ds_era5[variable].to_numpy()),(1,len_TD,len_lat*len_lon))
                     scale_std, scale_mean = torch.std_mean(values_tar, dim=1, unbiased=False)
-                    
             inputs = inputs.movedim(0,1) #(11,1,32,33) 
             inputs = inputs.movedim(1,-1)
-
+            #inputs, targets , scale_mean, scale_std torch.Size([11, 20, 32, 33, 12]) torch.Size([1, 20, 1056]) torch.Size([1, 20, 1056]) torch.Size([1, 20, 1056])
 
             if self.return_time:
                 return  inputs, targets , scale_mean, scale_std
