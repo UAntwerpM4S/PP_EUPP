@@ -41,7 +41,7 @@ PP_EUPP/
 
 You can specify most parameters in the command line, e.g. an example training command would be; 
 ```
-python3 Train.py --loss CRPS --model Transformer --ens-num 11 --target-var t2m --lr 0.001 --epochs 50  --batch-size 2 --nheads 8 --num_blocks 4 --projection_channels 64 --mlp_mult 4  
+python3 Train.py --loss CRPS --ens-num 11 --target-var t2m --lr 0.001 --epochs 50 --batch-size 2 --nheads 8 --num_blocks 4 --projection_channels 64 --mlp_mult 4 --num_predictors=12
 ``` 
 
 #### References
